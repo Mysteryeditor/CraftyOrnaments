@@ -1,0 +1,22 @@
+<div class="container-fluid d-flex justify-content-center">
+    <div class="card col-lg-8">
+        <div class="card-body">
+          
+                <form [formGroup]="loginForm" (ngSubmit)="VerifyCredentials()" novalidate>
+                    <mat-form-field class="example-full-width form-group mb-3">
+                        <mat-label>Email</mat-label>
+                        <input type="email" placeholder="example@gmail.com" matInput formControlName="email" />
+                    </mat-form-field><br />
+
+                    <mat-form-field class="example-full-width form-group mt-3">
+                        <mat-label>Password</mat-label>
+                        <input type="password" matInput formControlName="Password" /> </mat-form-field><br />
+
+                    <button mat-raised-button color="primary" type="submit" class="example-full-width">
+                        Login
+                    </button>
+                </form>
+          
+        </div>
+    </div>
+</div>
