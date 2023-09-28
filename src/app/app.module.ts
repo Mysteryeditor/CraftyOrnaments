@@ -13,10 +13,17 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
  import {MatRadioModule} from '@angular/material/radio';
 import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { UserListComponent } from './admin/user-list/user-list.component';
+import {DataTablesModule} from 'angular-datatables'
+import {MatTableModule} from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import { UserServiceService } from 'src/services/user-service.service';
+import { UserdatasourceService } from 'src/services/userdatasource.service';
 
 
 @NgModule({
-  declarations: [AppComponent, MetalsComponent, NavbarComponent, RegisterComponent, LoginComponent, DashboardComponent],
+  declarations: [AppComponent, MetalsComponent, NavbarComponent, RegisterComponent, LoginComponent, DashboardComponent, UserListComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -26,10 +33,13 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     MatFormFieldModule,
     ReactiveFormsModule,
     MatInputModule,
-    MatRadioModule
-
+    MatRadioModule,
+    DataTablesModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule
   ],
-  providers: [],
+  providers: [UserServiceService,UserdatasourceService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
