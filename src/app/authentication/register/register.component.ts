@@ -33,8 +33,11 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent implements OnInit {
-  emailexists: boolean=false;
-  constructor(private authservice: AuthenticationService,private user:UserServiceService) {}
+  emailexists: boolean = false;
+  constructor(
+    private authservice: AuthenticationService,
+    private user: UserServiceService
+  ) {}
   signupForm!: FormGroup;
   firstName!: FormControl;
   lastName!: FormControl;
@@ -42,28 +45,10 @@ export class RegisterComponent implements OnInit {
   DOB!: FormControl;
   email!: FormControl;
   Password!: FormControl;
-  confirmPassword!: FormControl
+  confirmPassword!: FormControl;
   phoneNumber!: FormControl;
-  profilePic!: FormControl;
-  image!: File;
-  // userData: UserData = {
-  //   firstName: '',
-  //   lastName: '',
-  //   gender: '',
-  //   DOB: new Date(),
-  //   email: '',
-  //   password: '',
-  //   phoneNumber: 0,
-  //   confirmPassword: ''
-  //   // profilePic: new Uint8Array([]),
-  // };
-  // existingEmails:string[]=[];
+  hide:boolean=false
   ngOnInit(): void {
-    //    this.user.getUserDetails().subscribe({
-    //   next:(data)=>{
-    //     data.forEach(a=>this.existingEmails.push(a.Email));
-    //   }
-    // });
     this.firstName = new FormControl('', [
       Validators.required,
       Validators.pattern(/^[a-zA-Z]{3,}$/),
@@ -84,7 +69,7 @@ export class RegisterComponent implements OnInit {
       Validators.required,
       Validators.pattern(
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-zd$@$!%*?&].{6,}$/
-      )
+      ),
     ]);
 
     this.confirmPassword = new FormControl('', [
@@ -92,13 +77,10 @@ export class RegisterComponent implements OnInit {
       matchValidator('Password'),
       Validators.pattern(
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-zd$@$!%*?&].{6,}$/
-      )
+      ),
     ]);
 
-    this.phoneNumber = new FormControl('', [Validators.required]);
-
-    // this.profilePic = new FormControl('', [Validators.required]);
-
+    this.phoneNumber = new FormControl('', [Validators.required,Validators.pattern(/^[0-9].{9}$/)]);
     this.signupForm = new FormGroup({
       firstName: this.firstName,
       lastName: this.lastName,
@@ -107,31 +89,11 @@ export class RegisterComponent implements OnInit {
       DOB: this.DOB,
       gender: this.gender,
       phoneNumber: this.phoneNumber,
-      confirmPassword: this.confirmPassword
-      // profilePic: this.profilePic,
+      confirmPassword: this.confirmPassword,
     });
   }
 
-  // onImageChange(event: any) {
-  //   this.image = event.target.files[0];
-  //   let reader = new FileReader();
-
-  //   reader.onload = () => {
-  //     const base64String = reader.result as ArrayBuffer;
-  //     const bytesValue=new Uint8Array(base64String);
-
-  //     // this.userData.profilePic=bytesValue;
-  //   };
-  //   reader.readAsArrayBuffer(this.image);
-
-  // }
-
-
   OnSubmit() {
     this.authservice.postUserRegister(this.signupForm.value);
-    // this.userData.password=this.Password.value;
-    // this.userData.profilePic);
-    // this.authservice.postUserRegister(this.userData);
-   
   }
 }

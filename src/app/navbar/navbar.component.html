@@ -1,6 +1,8 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<p-toast></p-toast>
+
+<nav class="navbar navbar-expand-lg navbar-maroon"> <!-- Apply background color with CSS class -->
   <div class="container-fluid">
-    <a class="navbar-brand fs-4" href="#">CraftyOrnaments</a>
+    <a class="navbar-brand fs-4 text-uppercase font-custom">CraftyOrnaments</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -8,28 +10,47 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
         <li>
-          <a class="nav-link active" [hidden]="!userLoggedIn" aria-current="page" href="#">DashBoard</a>
+          <a class="nav-link active text-uppercase" [hidden]="!userLoggedIn" aria-current="page" routerLink="/DashBoard">DashBoard</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
+          <a class="nav-link active text-uppercase" [hidden]="userLoggedIn" aria-current="page" routerLink="/">Home</a>
         </li>
-<li class="nav-item">
-<a class="nav-link" routerLink="/Users" [hidden]="!isAdmin">Users</a>
-</li>
 
+        <li class="nav-item">
+          <a class="nav-link text-uppercase" [hidden]="!isAdmin" routerLink="/allmetals">Metals</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-uppercase" routerLink="/Users" [hidden]="!isAdmin">Users</a>
+        </li>
 
+        <li class="nav-item">
+          <a class="nav-link text-uppercase" [hidden]="!isAdmin" routerLink="/ViewOrders">Orders List</a>
+        </li>
+
+        <li class="nav-item" *ngIf="!isAdmin && userLoggedIn">
+          <a class="nav-link text-uppercase" routerLink="/createorder">Order</a>
+        </li>
       </ul>
+
       <ul class="ms-auto list-unstyled d-flex">
-        <li class="nav-item mx-3">
-          <a class="btn btn-success" [hidden]="userLoggedIn" routerLink="Register">Register</a>
+        <li class="nav-item" [hidden]="!userLoggedIn">
+          <div class="dropdown me-lg-5">
+            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              <label *ngIf="firstName" class="text-maroon">{{ firstName }}</label>
+            </button>
+            <ul class="dropdown-menu text-center">
+              <li><a class="text-black text-decoration-none" routerLink="/UserOrders" [hidden]="!userLoggedIn || isAdmin"><i
+                    class="fa-solid fa-cart-shopping text-black"></i>Your Orders</a></li>
+              <li> <a class="btn text-maroon" [hidden]="!userLoggedIn" (click)="logout()"><i class="fa fa-sign-out"></i>Logout</a></li>
+            </ul>
+          </div>
         </li>
         <li class="nav-item mx-3">
-          <a class="btn btn-primary" [hidden]="userLoggedIn" routerLink="/Login" href="#">Login</a>
+          <a class="btn btn-success text-uppercase" [hidden]="userLoggedIn" routerLink="Register">Register</a>
         </li>
         <li class="nav-item mx-3">
-          <i class="fa-solid fa-heart text-black" [hidden]="!userLoggedIn"></i>Your WishList
-          <i class="fa-solid fa-cart-shopping text-black" [hidden]="!userLoggedIn"></i>Your Cart
-          <a class="btn btn-danger" [hidden]="!userLoggedIn" (click)="logout()">Logout</a>
+          <a class="btn btn-primary text-uppercase" [hidden]="userLoggedIn" routerLink="/Login" href="#">Login</a>
         </li>
       </ul>
     </div>

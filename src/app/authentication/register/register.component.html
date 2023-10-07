@@ -1,0 +1,101 @@
+<div class="container-fluid h-75 d-flex justify-content-center">
+  <div class="card col-lg-8 ">
+    <div class="card-title">
+      <h1 class="text-center">Register</h1>
+    </div>
+    <div class="card-body justify-content-center">
+
+      <form [formGroup]="signupForm" (ngSubmit)="(signupForm.valid) && OnSubmit()" novalidate>
+        <div class="row">
+          <div class="col-lg-6">
+            <mat-form-field class="col-lg-6 form-group my-3">
+              <mat-label>First Name</mat-label>
+              <input matInput formControlName="firstName" />
+              <mat-error *ngIf="firstName.hasError('pattern') && !firstName.hasError('required')">Minimum 3 Alphabets,No
+                Numbers or Symbols </mat-error>
+              <mat-error *ngIf="firstName.hasError('required')">Your Good Name Please</mat-error>
+            </mat-form-field><br />
+
+            <mat-form-field class="col-lg-6 form-group">
+              <mat-label>Last Name</mat-label>
+              <input matInput formControlName="lastName" /><mat-error *ngIf="lastName.hasError('required')">Your Last
+                Name</mat-error> </mat-form-field><br />
+
+            <mat-radio-group class="col-lg-6" formControlName="gender">
+              <mat-radio-button value="male">Male</mat-radio-button>
+              <mat-radio-button value="female">Female</mat-radio-button>
+              <mat-error *ngIf="gender.hasError('required')">*Gender is Mandatory</mat-error>
+            </mat-radio-group>
+            <br />
+
+            <mat-form-field class="col-lg-6 form-group mb-5">
+              <mat-label>Password</mat-label>
+              <input type="password" [type]="hide ? 'password' : 'text'" matInput formControlName="Password" />
+              <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hide">
+                <i class="fa-solid fa-eye"></i>
+              </button>
+              <mat-error *ngIf="Password.hasError('required')">Protection is needed Right?</mat-error>
+              <mat-error *ngIf="Password.hasError('pattern') && !Password.hasError('required')">Password is not strong
+                enough.</mat-error>
+              <mat-hint *ngIf="Password.valid">Woah The Best One so far!</mat-hint>
+            </mat-form-field><br />
+          </div>
+
+          <div class="col-lg-6 mt-lg-3">
+            <mat-form-field class="col-lg-6 form-group">
+              <mat-label>Email</mat-label>
+              <input type="email" placeholder="example@gmail.com" matInput formControlName="email" />
+              <mat-error *ngIf="email.hasError('pattern') && !email.hasError('required')">A Valid One?</mat-error>
+              <mat-error *ngIf="email.hasError('required')">Your Gmail?</mat-error>
+              <mat-error *ngIf="emailexists">Email Already Exists</mat-error>
+              <mat-hint *ngIf="email.valid">Perfect!</mat-hint>
+            </mat-form-field><br />
+
+            <mat-form-field class="col-lg-6 form-group">
+              <mat-label>Phone Number</mat-label>
+              <input matInput formControlName="phoneNumber" type="number" />
+              <mat-error *ngIf="phoneNumber.hasError('required')">Your Number?</mat-error>
+              <mat-error *ngIf="(phoneNumber.hasError('pattern'))">10
+                Digit Phone Number</mat-error>
+            </mat-form-field><br />
+
+            <mat-form-field class="col-lg-6 form-group">
+              <mat-label>Date Of Birth</mat-label>
+              <input type="date" matInput formControlName="DOB" /> </mat-form-field><br />
+
+            <mat-form-field class="col-lg-6 form-group">
+              <mat-label>Confirm Password</mat-label>
+              <input type="password" [type]="hide ? 'password' : 'text'" matInput formControlName="confirmPassword" />
+              <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hide">
+                <i class="fa-solid fa-eye"></i>
+              </button>
+              <mat-error *ngIf="confirmPassword.hasError('required')">*Required</mat-error>
+              <mat-error *ngIf="confirmPassword.hasError('matching') && !confirmPassword.hasError('required')">Passwords
+                Don't Match</mat-error>
+              <mat-hint *ngIf="confirmPassword.valid">Great!</mat-hint>
+            </mat-form-field><br />
+          </div>
+        </div>
+
+
+
+
+        <div class="row d-flex justify-content-center">
+          <button type="submit" class="btn btn-outline-success col-lg-3 ">
+            Register
+          </button>
+        </div>
+
+
+      </form>
+
+
+    </div>
+  </div>
+</div>
+
+<div class="text-center mt-lg-3">
+  <label class="fs-6"> Already a Member? </label> <a routerLink="/Login" class="text-black fs-5">Click Here To Login</a>
+</div>

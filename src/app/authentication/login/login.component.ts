@@ -11,6 +11,7 @@ export class LoginComponent implements OnInit {
   email!: FormControl;
   Password!: FormControl;
   loginForm!:FormGroup;
+  hide:boolean=true
 
   
 constructor(private auth:AuthenticationService){}
@@ -24,8 +25,6 @@ ngOnInit(): void {
  
     email: this.email,
     Password: this.Password,
- 
-    // profilePic: this.profilePic,
   });
 }
 

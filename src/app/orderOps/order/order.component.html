@@ -1,0 +1,180 @@
+<div class="container" style="min-height: 85vh;">
+    <mat-stepper [linear]="true" #stepper>
+        <mat-step [stepControl]="metalstep">
+            <form [formGroup]="metalstep">
+                <ng-template matStepLabel>Choose The Material</ng-template>
+                <div class="d-flex justify-content-center align-items-center">
+                    <mat-radio-group formControlName="metal">
+                        <mat-radio-button class="mx-5"
+                            (click)="metalFunction(metalitem.marketPrice,metalitem.metalName)"
+                            *ngFor="let metalitem of metalsList" value="{{metalitem.metalId}}">
+                            <label class="fs-5 fw-lighter">{{metalitem.metalName}}</label> <br>
+                            <img class="img-fluid metal-image" alt="img"
+                                src='https://localhost:44380/{{metalitem.metalImage}}'><br>
+                            <div class="d-flex mt-lg-2">
+                                <label>Price<sub>(Per Gram)</sub>:</label>
+                                <p>{{metalitem.marketPrice|currency:'INR'}}</p>
+                            </div>
+                            <div class="d-flex">
+                                <label>Quality:</label>
+                                <p>{{metalitem.purityGrade}}</p>
+                            </div>
+                            <mat-error *ngIf="metal.hasError('required')">Metal is Required</mat-error>
+                        </mat-radio-button>
+                    </mat-radio-group>
+                </div>
+                <div>
+                    <button mat-button matStepperNext>Next</button>
+                </div>
+            </form>
+        </mat-step>
+        <mat-step [stepControl]="ornamentstep" label="Choose Which Ornament">
+            <form [formGroup]="ornamentstep">
+                <mat-radio-group formControlName="ornament">
+                    <mat-radio-button class="mx-5"
+                        (click)="ornamentMakingCharge(ornament.makingCharge,ornament.ornamentName,ornament.ornamentId)"
+                        *ngFor="let ornament of ornamentsList" value="{{ornament.ornamentId}}">
+                        <label class="fs-5 fw-lighter">{{ornament.ornamentName}}</label> <br>
+                        <br>
+                    </mat-radio-button>
+
+
+                    <mat-error *ngIf="metal.hasError('required')">Choose One of the Ornaments</mat-error>
+
+                </mat-radio-group>
+            </form>
+
+            <button [disabled]="!metalstep.valid" mat-button matStepperNext>Next</button>
+
+        </mat-step>
+        <mat-step [stepControl]="dimensionstep" label="The Dimensions">
+            <form [formGroup]="dimensionstep">
+                <div class="d-flex">
+                    <div class="col-lg-4 col-md-6 offset-lg-4 ms-lg-5">
+                        <mat-form-field class="form-group">
+                            <mat-label>Weight <sub>(Grams)</sub></mat-label>
+                            <input min=1 [(ngModel)]="orderFormData.weight" (keyup)="calculatePrice()" type="number"
+                                matInput formControlName="weight" /> </mat-form-field>
+                        <mat-error *ngIf="weight.hasError('min')">Enter a value greater than 1 Gram</mat-error>
+                        <br>
+                        <mat-form-field *ngIf="!isSize" class="form-group">
+                            <mat-label>Length <sub>(cm)</sub></mat-label>
+                            <input type="number" [(ngModel)]="orderFormData.length" matInput formControlName="length" />
+                        </mat-form-field><br>
+
+                        <mat-form-field *ngIf="!isSize" class="form-group">
+                            <mat-label>Width <sub>(cm)</sub></mat-label>
+                            <input type="number" [(ngModel)]="orderFormData.width" matInput formControlName="width" />
+                        </mat-form-field><br>
+
+                        <mat-form-field class="form-group" *ngIf="isSize">
+                            <mat-label>Size</mat-label>
+                            <mat-select>
+                                <mat-option *ngFor="let sz of ringSizeArray" [value]="sz.sizeName" (onSelectionChange)="assignRingId(sz.sizeId
+                            )">
+                                    {{sz.sizeName}}({{sz.sizeValue}}mm)
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field><br>
+
+                        <mat-form-field class="form-group">
+                            <mat-label>Quantity</mat-label>
+                            <input [(ngModel)]="orderFormData.quantity" (input)="calculatePrice()" type="number"
+                                matInput formControlName="quantity" min="1" />
+                            <mat-error *ngIf="quantity.hasError('min')">Enter a value greater than
+                                1</mat-error></mat-form-field><br>
+                    </div>
+                    <div class="col-lg-3 col-md-6 card maroon-card">
+                        <div class="card-body">
+                            <h4 class="maroon-text">Pricings</h4>
+                            <div class="pricing-item">
+                                <label class="maroon-text">Making Charge Per Gram:</label>
+                                <span class="highlight-text">{{ makingCharge }}</span>
+                            </div>
+
+                            <div class="pricing-item" *ngIf="!isSize">
+                                <label class="maroon-text">Length:</label>
+                                <span class="highlight-text">{{ orderFormData.length }}</span>
+                            </div>
+
+                            <div class="pricing-item" *ngIf="!isSize">
+                                <label class="maroon-text">Width:</label>
+                                <span class="highlight-text">{{ orderFormData.width }}</span>
+                            </div>
+
+                            <div class="pricing-item" *ngIf="!isSize">
+                                <label class="maroon-text">Size:</label>
+                                <span class="highlight-text">{{ size }}</span>
+                            </div>
+
+                            <div class="pricing-item">
+                                <label class="maroon-text">Total Making Charge:</label>
+                                <span class="highlight-text">{{ TotalMakingCharge }}</span>
+                            </div>
+
+                            <div class="pricing-item">
+                                <label class="maroon-text">Estimated Cost:</label>
+                                <span class="highlight-text">{{ estimatedCost | currency: "INR" }}</span>
+                                <sub class="maroon-text">*Wastage Not Included</sub>
+                            </div>
+
+                            <div class="pricing-item">
+                                <label class="maroon-text">Initial Amount To Be Paid:</label>
+                                <span class="highlight-text">{{ orderFormData.advanceAmount | currency: "INR" }}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+            <div>
+                <button mat-button matStepperNext>Next</button>
+            </div>
+        </mat-step>
+        <mat-step>
+            <ng-template matStepLabel>Confirm</ng-template>
+            <div class="card col=lg-10">
+                <div class="card-title">
+                    <h1 class="text-center fw-bold mt-lg-2">Order Confirmation</h1>
+                </div>
+                <div class="card-body ">
+                    <div class="mb-lg-3">
+                        <hr>
+                        <h2>Product Details</h2>
+                        <label class="fs-4">Item:</label>
+                        <label class="fs-5">{{metalName}} {{ornamentName}}</label>
+
+                        <p><Label>Quantity:</Label><label>{{quantity.value}}</label></p>
+                    </div>
+                    <hr>
+                    <div class=" mb-lg-3">
+                        <h2>Dimensions</h2>
+                        <label class="fs-4">Weight:</label>
+                        <label class="fs-5">{{orderFormData.weight}}</label>
+                    </div>
+
+
+
+
+                    <hr>
+                    <div class=" mb-lg-3">
+                        <h2>Pricing Details</h2>
+                        <p>
+                            MakingCharges:{{TotalMakingCharge}}
+                        </p>
+                        <label class="fs-4">Estimated Cost*:</label>
+                        <label class="fs-5">{{estimatedCost|currency:"INR"}}</label>
+                        <label class="fs-6">Initial Amount To be Paid:{{orderFormData.advanceAmount}}</label>
+
+                    </div>
+
+                </div>
+            </div>
+            <div>
+                <button mat-button matStepperPrevious>Back</button>
+                <button (click)=" orderPlace()">Proceed To Payment</button>
+                <button mat-button (click)="stepper.reset()">Cancel</button>
+            </div>
+        </mat-step>
+    </mat-stepper>
+</div>

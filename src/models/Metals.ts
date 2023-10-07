@@ -1,9 +1,8 @@
 export interface MetalChoice
 {
-  metalId:number|undefined;
-  metalName:string |undefined;
-  marketPrice:number|undefined;
-  purityGrade:string|undefined;
-  metalImage:string|undefined;
-
+  metalId:number;
+  metalName:string ;
+  marketPrice:number;
+  purityGrade:string;
+  metalImage:string;
 }

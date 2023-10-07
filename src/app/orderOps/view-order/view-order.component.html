@@ -1,0 +1,67 @@
+<h1>
+  Orders
+</h1>
+
+<div class="container-fluid">
+  <ag-grid-angular class="ag-theme-alpine" id="myGrid"  [defaultColDef]="defaultColumnDef"
+    [rowData]="orderData" [paginationAutoPageSize]="true" style="width: 100%;height: 100%;"
+    [pagination]="true" [columnDefs]="colDefs"  [domLayout]="domLayout" (rowClicked)="onRowClicked($event)">
+
+  </ag-grid-angular>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Update Order</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <div class="modal-body">
+          <div class="d-flex flex-column">
+            <p class="mb-3">
+              <label class="fw-bold">
+                Order Status:
+              </label>
+        
+              <select name="status" [(ngModel)]="chosenOrder.statusId" class="form-select fs-5" style="font-size: 14px;">
+                <option value="{{ item.statusId }}" [disabled]="chosenOrder.statusId > item.statusId" *ngFor="let item of orderStatus">
+                  {{ item.statusName }}
+                </option>
+              </select>
+            </p>
+            <div *ngIf="chosenOrder.statusId == 4" class="mb-3">
+              <label class="fw-bold">Wastage:(Percentage)</label>
+              <input type="number" [(ngModel)]="wastagePercent" (input)="onWastageChange($event)" class="form-control fs-5" min="3">
+              <div *ngIf="wastagePercent < 3" class="text-danger">Wastage must be at least 3.</div>
+              <p>
+                <span class="fw-bold">Weight:</span>
+                {{ chosenOrder.weight | number }} g
+              </p>
+              <p>
+                <span class="fw-bold">Final Weight:</span>
+                {{ chosenOrder.finalWeight | number }} g
+              </p>
+              <p>
+                <span class="fw-bold">Estimated Amount:</span>
+                {{ chosenOrder.totalamount | currency:'INR':'symbol':'1.2-2' }}
+              </p>
+              <p>
+                <span class="fw-bold">Final Amount:</span>
+                {{ chosenOrder.finalamount | currency:'INR':'symbol':'1.2-2' }}
+              </p>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" [disabled]="(wastagePercent < 3 && chosenOrder.statusId>3)" (click)="updateStatus()">Update</button>
+      </div>
+    </div>
+  </div>
+</div>

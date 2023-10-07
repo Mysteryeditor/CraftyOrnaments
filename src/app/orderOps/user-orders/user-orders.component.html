@@ -1,0 +1,67 @@
+<p-toast [breakpoints]="{'920px': {width: '100%', right: '0', left: '0'}}" [showTransformOptions]="'translateY(100%)'"
+    [showTransitionOptions]="'1000ms'" [hideTransitionOptions]="'1000ms'"
+    [showTransformOptions]="'translateX(100%)'"></p-toast>
+<div class="container-fluid text-center mt-lg-5" *ngIf="noOrders">
+    <p>Discover our exquisite jewelry collection and create your own unique pieces today!</p>
+    <a class="btn btn-primary" routerLink="/createorder">Shop Jewelry</a>
+</div>
+
+<div class="container-fluid d-flex justify-content-center">
+    <div class="card col-lg-10 my-3 col-md-12 col-sm-12 mx-2" *ngFor="let item of userOrder">
+
+        <div class="card-title">
+            <h2>
+                {{item.metalName}} {{item.ornamentName}}
+            </h2>
+        </div>
+
+        <div class="card-body row">
+            <div class="col-lg-6">
+                <h4>Ordered {{item.createdDate|date}}</h4>
+                <h5>Status {{item.statusName}}</h5>
+            </div>
+
+            <div class="col-lg-6 justify-content-end" *ngIf="item.statusName.toLowerCase()=='completed'">
+                <h3 class="fw-bold">Price BreakDown</h3>
+                <p>Ordered Weight:{{item.weight}}<sub>Grams</sub></p>
+                <p>Final Weight:{{item.finalWeight}}<sub>Grams</sub></p>
+                <p>Wastage Percent:{{(item.finalamount-item.totalamount)/100}}%</p>
+                <p>Estimated Amount:{{item.totalamount|currency:"INR"}}</p>
+                <p><mark>Final Amount: <span class="fs-3">{{item.finalamount|currency:"INR"}}</span></mark></p>
+            </div>
+
+        </div>
+
+        <button class="btn btn-success" *ngIf="item.statusName.toLowerCase()=='completed'"
+            (click)=" finalPayment(item)">Make It Yours</button>
+    </div>
+</div>
+
+<div class="container-fluid" *ngIf="!noOrders">
+    <h2>Previous Orders</h2>
+    <div class="card col-lg-10 my-3 col-md-12 col-sm-12 mx-2" *ngFor="let item of inActiveUserOrder">
+        <div *ngIf="item.statusName.toLowerCase()=='finalamountpaid'">
+            <div class="card-title">
+                <h2>
+                    {{item.metalName}} {{item.ornamentName}}
+                </h2>
+            </div>
+            <div class="card-body row">
+                <div class="col-lg-6">
+                    <h4>Ordered {{item.createdDate|date}}</h4>
+                    <h4>Delivered{{item.dueDate|date}}</h4>
+                </div>
+                <div class="col-lg-6 justify-content-end">
+                    <h3 class="fw-bold">Price BreakDown</h3>
+                    <p>Ordered Weight:{{item.weight}}<sub>Grams</sub></p>
+                    <p>Final Weight:{{item.finalWeight}}<sub>Grams</sub></p>
+                    <p>Wastage Percent:{{(item.finalamount-item.totalamount)/100}}%</p>
+                    <p>Estimated Amount:{{item.totalamount|currency:"INR"}}</p>
+                    <p><mark>Final Amount: <span class="fs-3">{{item.finalamount|currency:"INR"}}</span></mark></p>
+                </div>
+            </div>
+            <button class="btn btn-success" *ngIf="item.statusName.toLowerCase()=='completed'"
+                (click)=" finalPayment(item)">Make It Yours</button>
+        </div>
+    </div>
+</div>

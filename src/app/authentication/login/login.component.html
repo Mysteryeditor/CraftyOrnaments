@@ -1,0 +1,40 @@
+<div class="bg-subtle-maroon"> 
+    <div class="container-fluid d-flex justify-content-center">
+      <div class="card  col-lg-6 col-md-12 col-sm-12 rounded-top mt-5 bg-maroon">
+        <div class="card-body text-center" style="background-color: #f5f5f5;">
+          <h2 class="text-maroon">Login</h2> 
+  
+          <form [formGroup]="loginForm" (ngSubmit)="(loginForm.valid)&&VerifyCredentials()" novalidate>
+            <mat-form-field class="col-lg-6 col-md-8 col-sm-12 form-group mb-3">
+              <mat-label>Email</mat-label>
+              <input type="email" placeholder="example@gmail.com" matInput formControlName="email" />
+              <mat-error *ngIf="email.hasError('required')">Email is Required</mat-error>
+            </mat-form-field><br />
+  
+            <mat-form-field class="col-lg-6 col-md-8 col-sm-12 form-group my-3">
+              <mat-label>Password</mat-label>
+              <input type="password" [type]="hide ? 'password' : 'text'" matInput formControlName="Password" />
+              <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="hide">
+              <i class="fa-solid fa-eye"></i>
+          </button>
+              <mat-error *ngIf="Password.hasError('required')">Password is Required</mat-error>
+            </mat-form-field><br />
+  
+            <div class="d-flex justify-content-center">
+              <button type="submit" class="btn btn-outline-primary px-5 mx-2 bg-light text-black"> <!-- Subtle background with black text -->
+                Login
+              </button>
+            </div>
+  
+            <p class="my-3 text-maroon">Forgot Your Password?<a data-bs-toggle="modal" href="#exampleModalToggle">Click Here</a></p>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="text-center">
+        <label class="fs-6 my-2 text-maroon">New Here?</label> <a routerLink="/Register" class="text-black fs-5">Click Here To Register</a>
+      </div>
+  </div>
+
+  <app-forgot-password></app-forgot-password>

@@ -1,11 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
 import { UserData } from 'src/models/UserData';
 import { UserServiceService } from 'src/services/user-service.service';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
-import { Sort } from '@angular/material/sort';
-import { UserdatasourceService } from 'src/services/userdatasource.service';
+import { Router } from '@angular/router';
+import { ColDef } from 'ag-grid-community/dist/lib/entities/colDef';
 
 @Component({
   selector: 'app-user-list',
@@ -13,43 +10,57 @@ import { UserdatasourceService } from 'src/services/userdatasource.service';
   styleUrls: ['./user-list.component.css']
 })
 export class UserListComponent implements OnInit {
-
-  displayedColumns: string[] = ['id', 'firstName', 'lastName', 'gender', 'DOB', 'phoneNumber', 'role', 'orderCount', 'email', 'operations'];
-  datasource1: any;
-  constructor(private adminService: UserServiceService) { }
+  constructor(private adminService: UserServiceService, private router: Router) { }
   allUsers: UserData[] = [];
-  datasource = new UserdatasourceService(this.adminService);
-
-  
-
+  defaultColumnDef: ColDef = {
+    sortable: true, filter: true,
+    flex: 1,
+    minWidth: 100    
+  }
+  colDefs: ColDef[] = [{
+    field: 'firstName', headerName: 'FirstName'
+  }, {
+    field: 'gender', headerName: 'Gender'
+  },
+  { field: 'orderCount', headerName: 'Orders' },
+  { field: 'email', headerName: 'Email' },
+  { field: 'phoneNumber', headerName: 'Contact' }
+  ];
   ngOnInit(): void {
+    this.adminService.getUserDetails().subscribe({
+      next: (data) => {
+        console.log(data)
+        this.allUsers = data;
+      },
+      error: (error) => {
+        alert("error sorry!");
+      }
+    })
 
-  //   this.adminService.getUserDetails({ active: 'id', direction: 'desc' }).subscribe({
-  //     next:(data) => {
-  //     this.allUsers = data;
-  //     this.datasource1 = new MatTableDataSource<UserData>(this.allUsers);
-  //   }
-  // })
-    this.datasource.loadUsers({ active: 'id', direction: 'asc' });
-    console.log(this.allUsers)
- 
+    //   this.adminService.getUserDetails({ active: 'id', direction: 'desc' }).subscribe({
+    //     next:(data) => {
+    //     this.allUsers = data;
+    //     this.datasource1 = new MatTableDataSource<UserData>(this.allUsers);
+    //   }
+    // })
+    //   this.datasource.loadUsers({ active: 'id', direction: 'asc' });
+
+
+    // }
+
+    // sortUsers(sort: Sort): void {
+    //   this.datasource.loadUsers(sort);
+
+    // }
+
+
   }
+  // deleteUser(item: any) {
 
-  sortUsers(sort: Sort): void {
-    this.datasource.loadUsers(sort);
+  // }
 
-  }
+  // viewDetails(item: any) {
 
-  editUser(userdata: any) {
-    console.log(userdata);
-  }
-
-  deleteUser(item: any) {
-
-  }
-
-  viewDetails(item: any) {
-
-  }
+  // }
 
 }

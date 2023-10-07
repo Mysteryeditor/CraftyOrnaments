@@ -1,0 +1,40 @@
+<div class="container-fluid">
+    <div class="card-title">
+        <h2>Add New Metal
+        </h2>
+    </div>
+    <div class="card col-lg-6">
+        <form [formGroup]="metalForm" (ngSubmit)="metalForm.valid&&metalCreate()">
+            <mat-form-field class="example-full-width form-group my-3">
+                <mat-label>Metal Name</mat-label>
+                <input matInput formControlName="metalName" />
+
+            </mat-form-field><br />
+
+            <mat-form-field class="example-full-width form-group my-3">
+                <mat-label>Market Price</mat-label>
+                <input type="number" matInput formControlName="marketPrice" />
+
+            </mat-form-field><br />
+
+            <mat-form-field class="example-full-width form-group my-3">
+                <mat-label>Purity Grade</mat-label>
+                <input matInput formControlName="purityGrade" />
+
+            </mat-form-field><br />
+
+
+            <div class="d-flex">
+                <input [hidden]="true" matInput formControlName="metalImage" />
+                <app-imageupload (onUploadFinished)="uploadFinished($event)"></app-imageupload>
+                <img *ngIf="hideImg" class="img-fluid mx-3 rounded" [src]="src" style="height:60px" alt="Image">
+            </div>
+
+            <br />
+
+            <button class="my-5 btn btn-primary" type="submit">Create Metal</button>
+
+        </form>
+    </div>
+
+</div>

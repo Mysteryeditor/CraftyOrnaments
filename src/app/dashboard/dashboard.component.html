@@ -1,1 +1,51 @@
+<div class="dashboard" style="background-color: #FFE4E1;">
+  <p-toast [breakpoints]="{'920px': { width: '100%', right: '0', left: '0' }}"
+    [showTransformOptions]="'translateY(100%)'" [showTransitionOptions]="'1000ms'" [hideTransitionOptions]="'1000ms'"
+    [showTransformOptions]="'translateX(100%)'"></p-toast>
 
+  <div class="container-fluid d-flex justify-content-center p-5" *ngIf="!isAdmin">
+      <div class="card text-center col-lg-4">
+        <p class="lead">
+          Explore our gold collection for jewelry and investments.
+        </p>
+        <a routerLink="/createorder" class="btn btn-primary text-center col-5 mx-auto">
+          Place Your Order
+        </a>
+      </div>
+  </div>
+
+  <div class="container-fluid" *ngIf="isAdmin">
+    <h1 class="fw-bold">Welcome to the Admin Dashboard</h1>
+    <div class="container mt-2">
+      <div class="row">
+        <div class="col-lg-7 my-3">
+          <div class="card bg-greyish-white">
+            <div class="card-body">
+              <h5 class="card-title fw-bold text-center fs-3 mb-4 text-maroon">Recent Orders</h5>
+              <ul class="list-group">
+                <li class="list-group-item my-2 bg-maroon text-white" *ngFor="let item of orderData;">
+                  <div class="d-flex justify-content-between align-items-center">
+                    <span class="font-weight-bold">{{ item.metalName }} {{ item.ornamentName }}</span>
+                    <span class="badge bg-success">{{ item.finalamount | currency:'INR':'symbol':'1.2-2' }}</span>
+                  </div>
+                  <div>
+                    <p>Weight: {{ item.weight }} grams</p>
+                    <p>Due Date: {{ item.dueDate | date }}</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-5 col-md-10 col-sm-12 my-3">
+          <div class="card col-md-8 col-sm-12">
+            <div class="card-title text-center fw-bold fs-3 text-maroon">
+              <h2>Orders By Metal</h2>
+            </div>
+            <app-doughnutchart></app-doughnutchart>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

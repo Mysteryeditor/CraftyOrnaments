@@ -1,0 +1,4 @@
+<div>
+    <input type="file" class="d-none" #file placeholder="Choose File" (change)="uploadFile(file.files)">
+    <button class="btn btn-outline-primary" (click)="file.click()">UploadFile</button>
+</div>

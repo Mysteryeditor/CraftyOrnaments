@@ -1,0 +1,47 @@
+<div class="container-fluid d-flex justify-content-center" *ngIf="apiName=='metals'">
+  <div class="card my-3 col-lg-8 col-md-10 col-sm-12">
+    <div class="card-body">
+      <h1 class="card-title text-center">Metal Edit</h1>
+
+      <form [formGroup]="metalGroup" (ngSubmit)="(metalGroup.valid) && OnSubmit()">
+        <mat-form-field [hidden]="true" class="example-full-width form-group my-3">
+          <mat-label>Metal Id</mat-label>
+          <input matInput formControlName="metalId" [(ngModel)]="metalData.metalId" />
+        </mat-form-field><br />
+
+        <mat-form-field class="example-full-width form-group my-3">
+          <mat-label>Metal Name</mat-label>
+          <input matInput formControlName="metalName" [(ngModel)]="metalData.metalName" />
+          <mat-error *ngIf="metalName.hasError('pattern') && !metalName.hasError('required')">Minimum 3 Alphabets, No Numbers or Symbols </mat-error>
+          <mat-error *ngIf="metalName.hasError('required')">Name Is required</mat-error>
+        </mat-form-field><br />
+
+        <mat-form-field class="example-full-width form-group my-3">
+          <mat-label>Market Price</mat-label>
+          <input type="number" [(ngModel)]="metalData.marketPrice" matInput formControlName="marketPrice" />
+          <mat-error *ngIf="marketPrice.hasError('required')">Price Is required</mat-error>
+        </mat-form-field><br />
+
+        <mat-form-field class="example-full-width form-group my-3">
+          <mat-label>Purity Grade</mat-label>
+          <input matInput [(ngModel)]="metalData.purityGrade" formControlName="purityGrade" />
+          <mat-error *ngIf="purityGrade.hasError('required')">Grade Is required</mat-error>
+        </mat-form-field><br />
+
+        <mat-form-field [hidden]="true" class="example-full-width form-group my-3">
+          <mat-label>Metal Id</mat-label>
+          <input matInput formControlName="metalId" [(ngModel)]="metalData.metalId" />
+        </mat-form-field><br />
+
+        <mat-form-field [hidden]="true" class="example-full-width form-group my-3">
+          <mat-label>Metal Image</mat-label>
+          <input matInput formControlName="metalId" [(ngModel)]="metalData.metalImage" />
+        </mat-form-field><br />
+
+        <button type="submit" class="btn btn-outline-success">
+          Update
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

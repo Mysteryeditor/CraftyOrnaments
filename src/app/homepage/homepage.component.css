@@ -1,0 +1,47 @@
+.layer1div{
+    height: 100vh;
+    background-image: url(https://images.unsplash.com/photo-1611955167811-4711904bb9f8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80);
+    background-position: center;
+    background-size: cover;
+}
+
+/* Styles for the h3 tag */
+.collection-title {
+    font-size: 45px; 
+    font-family: 'Courier New', Courier, monospace; 
+line-height: 45px;
+    text-align: end;
+    color: black;
+  }
+  
+  /* Styles for the p tag */
+  .collection-description {
+    font-size: 25px; 
+    line-height: 27px;
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif 
+  }
+
+
+.card-title-custom {
+    font-size: 20px;
+    font-weight: bold;
+  }
+  
+  .card-text-custom {
+    font-size: 16px;
+  }
+  
+  
+
+  @media (max-width: 768px) {
+    .collection-title {
+      font-size: 30px;
+      text-align: center;
+    }
+  
+    .collection-description {
+      font-size: 20px;
+      text-align: center;
+    }
+  }
